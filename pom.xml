@@ -31,9 +31,7 @@
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>0.8.12</version>
-                <configuration>
-                    <outputDirectory>${project.build.directory}/jacoco</outputDirectory>
-                </configuration>
+
                 <executions>
                     <execution>
                         <goals>
