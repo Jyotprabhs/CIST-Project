@@ -21,3 +21,12 @@ jobs:
           distribution: 'temurin'
           java-version: ${{ matrix.java }}
       - run: mvn clean install
+
+      - name: Check test coverage
+        run: |
+          coverage=$(mvn jacoco:report -q | grep -oP '.*coverage.*\K\d+')
+          echo "Test coverage: $coverage"
+          if [ "$coverage" -lt 80 ]; then
+            echo "Test coverage below threshold. Failing build!"
+            exit 1
+          fi
