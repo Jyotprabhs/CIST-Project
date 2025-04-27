@@ -22,11 +22,12 @@ jobs:
           java-version: ${{ matrix.java }}
       - run: mvn clean install
 
-      - name: Check test coverage
+      - name: Generate JaCoCo report and capture coverage
         run: |
-          coverage=$(mvn jacoco:report -q | grep -oP '.*coverage.*\K\d+')
-          echo "Test coverage: $coverage"
+          mvn jacoco:report
+          coverage=$(grep -oP '.*coverage.*\K\d+' target/site/jacoco/index.html)
+          echo "Coverage: $coverage%"
           if [ "$coverage" -lt 80 ]; then
-            echo "Test coverage below threshold. Failing build!"
+            echo "Code coverage is below threshold! Failing the build."
             exit 1
           fi
